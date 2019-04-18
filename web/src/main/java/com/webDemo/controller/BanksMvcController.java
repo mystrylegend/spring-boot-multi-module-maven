@@ -4,6 +4,8 @@ import com.apiDemo.controller.BanksController;
 import com.apiDemo.model.Account;
 import com.apiDemo.model.AccountListWrapper;
 import com.apiDemo.service.BanksService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,8 +22,11 @@ import java.util.List;
 @Controller
 public class BanksMvcController {
 
+    Logger l= LoggerFactory.getLogger(BanksMvcController.class);
     @Autowired
     private BanksService banksService;
+
+
 
     public static final String ACCOUNT_LIST_WRAPPER="accountListWrapper";
     private static final String INIT_IBAN="initIban";
@@ -31,6 +36,8 @@ public class BanksMvcController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getAccountListWrapper(HttpSession session,ModelMap model, @RequestParam(value="storageType",required = false) String storageType) {
+
+        l.info("We have come in this thing");
         AccountListWrapper accountListWrapper=null;
         if(storageType==null || SESSION.equals(storageType)) {
             accountListWrapper = sessionSelected(session, storageType);
